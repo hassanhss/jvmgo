@@ -5,6 +5,11 @@ import (
 	"path/filepath"
 )
 
+/**
+ * 操作符& : 当作二元操作符时，是按位与操作；当作一元操作符时，是返回该变量的内存地址
+ * 操作符* : 当作二元操作符时，是相乘的操作；当作一元操作符（解引用操作符）时，是返回该指针指向的变量的值，其实就是解除变量的指针引用，返回该变量的值
+ */
+
 type Classpath struct {
 	bootClasspath Entry
 	extClasspath  Entry
