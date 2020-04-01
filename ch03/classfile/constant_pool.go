@@ -24,3 +24,7 @@ func (self ConstantPool) getConstantInfo(index uint16) ConstantInfo {
 	}
 	panic(fmt.Errorf("Invalid constant pool index:%v!", index))
 }
+
+func (self ConstantPool) getNameAndType(index uint16) (string, string) {
+
+}
