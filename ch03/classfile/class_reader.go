@@ -34,7 +34,7 @@ func (self *ClassReader) readUint64() uint64 {
 	return val
 }
 
-func (self *ClassReader) readUint64s() []uint16 {
+func (self *ClassReader) readUint16s() []uint16 {
 	n := self.readUint16()
 	s := make([]uint16, n)
 	for i := range s {

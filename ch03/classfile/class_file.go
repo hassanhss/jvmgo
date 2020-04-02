@@ -31,5 +31,5 @@ type ClassFile struct {
 	interfaces   []uint16
 	fields       []*MemberInfo
 	methods      []*MemberInfo
-	attributes   []*MemberInfo
+	attributes   []AttributeInfo
 }
