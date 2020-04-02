@@ -22,7 +22,10 @@ ClassFile {
     attribute_info attributes[attributes_count];
 }
 */
-
+/*
+go的方位控制很简单：只有公开和私有两种类型。所有首字母大写的类型、结构体、字段、变量、函数、方法都是公开的，
+首字母小写的则是私有的，只能在包内使用。
+*/
 type ClassFile struct {
 	minorVersion uint16
 	majorVersion uint16
