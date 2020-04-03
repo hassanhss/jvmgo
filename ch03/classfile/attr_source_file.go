@@ -1,6 +1,7 @@
 package classfile
 
 /*
+用于指出源文件名
 SourceFile_attribute {
     u2 attribute_name_index;
     u4 attribute_length;
