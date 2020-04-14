@@ -14,7 +14,7 @@ type WIDE struct {
 }
 
 func (self *WIDE) FetchOperands(reader *base.BytecodeReader) {
-	opcode := reader.ReadInt8()
+	opcode := reader.ReadUint8()
 	switch opcode {
 	case 0x15:
 		inst := &loads.ILOAD{}

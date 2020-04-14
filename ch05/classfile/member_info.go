@@ -64,4 +64,5 @@ func (self *MemberInfo) CodeAttribute() *CodeAttribute {
 			return attrInfo.(*CodeAttribute)
 		}
 	}
+	return nil
 }
