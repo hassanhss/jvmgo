@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"jvmgo/ch05/classfile"
+	"jvmgo/ch05/instructions"
 	"jvmgo/ch05/instructions/base"
 	"jvmgo/ch05/rtda"
 )
@@ -28,7 +29,13 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 		//decode
 		reader.Reset(bytecode, pc)
 		opcode := reader.ReadUint8()
-		inst := instruction.New
+		inst := instructions.NewInstruction(opcode)
+		inst.FetchOperands(reader)
+		frame.SetNextPC(reader.PC())
+
+		//execute
+		fmt.Printf("pc:%2d inst:%T %v\n", pc, inst, inst)
+		inst.Execute(frame)
 	}
 }
 
