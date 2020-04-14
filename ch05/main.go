@@ -28,8 +28,8 @@ func startJVM(cmd *Cmd) {
 	} else {
 		fmt.Printf("Main method not found in class %s\n", cmd.class)
 	}
-	fmt.Println(cmd.class)
-	printClassInfo(cf)
+	//fmt.Println(cmd.class)
+	//printClassInfo(cf)
 }
 
 func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
