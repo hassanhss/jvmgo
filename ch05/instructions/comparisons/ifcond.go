@@ -39,6 +39,15 @@ func (self *IFLT) Execute(frame *rtda.Frame) {
 	}
 }
 
+type IFLE struct{ base.BranchInstruction }
+
+func (self *IFLE) Execute(frame *rtda.Frame) {
+	val := frame.OperandStack().PopInt()
+	if val <= 0 {
+		base.Branch(frame, self.Offset)
+	}
+}
+
 type IFGT struct {
 	base.BranchInstruction
 }

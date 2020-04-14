@@ -18,6 +18,12 @@ func (self *FSTORE) Execute(frame *rtda.Frame) {
 	_fstore(frame, 0)
 }
 
+type FSTORE_0 struct{ base.NoOperandsInstruction }
+
+func (self *FSTORE_0) Execute(frame *rtda.Frame) {
+	_fstore(frame, 0)
+}
+
 type FSTORE_1 struct {
 	base.NoOperandsInstruction
 }

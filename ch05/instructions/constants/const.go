@@ -121,3 +121,9 @@ type LCONST_0 struct {
 func (self *LCONST_0) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushLong(0)
 }
+
+type LCONST_1 struct{ base.NoOperandsInstruction }
+
+func (self *LCONST_1) Execute(frame *rtda.Frame) {
+	frame.OperandStack().PushLong(1)
+}

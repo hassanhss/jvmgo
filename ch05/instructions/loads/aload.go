@@ -18,6 +18,12 @@ func (self *ALOAD) Execute(frame *rtda.Frame) {
 	_aload(frame, 0)
 }
 
+type ALOAD_0 struct{ base.NoOperandsInstruction }
+
+func (self *ALOAD_0) Execute(frame *rtda.Frame) {
+	_aload(frame, 0)
+}
+
 type ALOAD_1 struct {
 	base.NoOperandsInstruction
 }

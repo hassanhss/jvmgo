@@ -18,6 +18,12 @@ func (self *LSTORE) Execute(frame *rtda.Frame) {
 	_lstore(frame, 0)
 }
 
+type LSTORE_0 struct{ base.NoOperandsInstruction }
+
+func (self *LSTORE_0) Execute(frame *rtda.Frame) {
+	_lstore(frame, 0)
+}
+
 type LSTORE_1 struct {
 	base.NoOperandsInstruction
 }
