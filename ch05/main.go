@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"jvmgo/ch02/classpath"
-	"jvmgo/ch03/classfile"
+	"jvmgo/ch05/classfile"
+	"jvmgo/ch05/classpath"
 	"strings"
 )
 
@@ -22,6 +22,12 @@ func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	cf := loadClass(className, cp)
+	mainMethod := getMainMethod(className, cf)
+	if mainMethod != nil {
+		interpret(mainMethod)
+	} else {
+		fmt.Printf("Main method not found in class %s\n", cmd.class)
+	}
 	fmt.Println(cmd.class)
 	printClassInfo(cf)
 }
@@ -53,4 +59,13 @@ func printClassInfo(cf *classfile.ClassFile) {
 	for _, m := range cf.Methods() {
 		fmt.Printf("  %s\n", m.Name())
 	}
+}
+
+func getMainMethod(name string, cf *classfile.ClassFile) *classfile.MemberInfo {
+	for _, m := range cf.Methods() {
+		if m.Name() == "main" && m.Descriptor() == "([Ljava/lang/String;)V" {
+			return m
+		}
+	}
+	return nil
 }
