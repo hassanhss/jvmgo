@@ -14,3 +14,7 @@ func (self *ClassMember) copyMemberInfo(memberInfo *classfile.MemberInfo) {
 	self.name = memberInfo.Name()
 	self.descriptor = memberInfo.Descriptor()
 }
+
+func (self *ClassMember) IsStatic() bool {
+	return 0 != self.accessFlags&ACC_STATIC
+}
