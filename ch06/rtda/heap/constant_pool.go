@@ -1,6 +1,9 @@
 package heap
 
-import "jvmgo/ch06/classfile"
+import (
+	"fmt"
+	"jvmgo/ch06/classfile"
+)
 
 type Constant interface {
 }
@@ -26,9 +29,11 @@ func newConstantPool(class *Class, cfCp classfile.ConstantPool) *ConstantPool {
 		case *classfile.ConstantLongInfo:
 			longInfo := cpInfo.(*classfile.ConstantLongInfo)
 			consts[i] = longInfo.Value()
+			i++
 		case *classfile.ConstantDoubleInfo:
 			doubleInfo := cpInfo.(*classfile.ConstantDoubleInfo)
 			consts[i] = doubleInfo.Value()
+			i++
 		case *classfile.ConstantStringInfo:
 			stringInfo := cpInfo.(*classfile.ConstantStringInfo)
 			consts[i] = stringInfo.String()
@@ -49,4 +54,11 @@ func newConstantPool(class *Class, cfCp classfile.ConstantPool) *ConstantPool {
 		}
 	}
 	return rtCp
+}
+
+func (self *ConstantPool) GetConstant(index uint) Constant {
+	if c := self.consts[index]; c != nil {
+		return c
+	}
+	panic(fmt.Sprintf("No constants at index %d", index))
 }
