@@ -1,6 +1,10 @@
 package heap
 
-import "jvmgo/ch06/classpath"
+import (
+	"fmt"
+	"jvmgo/ch06/classfile"
+	"jvmgo/ch06/classpath"
+)
 
 /*
 class names:
@@ -30,7 +34,11 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 }
 
 func (self *ClassLoader) loadNonArrayClass(name string) *Class {
-	return nil
+	data, entry := self.readClass(name)
+	class := self.defineClass(data)
+	link(class)
+	fmt.Printf("[Loaded %s from %s]\n", name, entry)
+	return class
 }
 
 func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
@@ -39,4 +47,33 @@ func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
 		panic("java.lang.ClassNotFoundException: " + name)
 	}
 	return data, entry
+}
+
+func (self *ClassLoader) defineClass(data []byte) *Class {
+	class := parseClass(data)
+	class.loader = self
+	resolveSuperClass(class)
+	resolveInterfaces(class)
+	self.classMap[class.name] = class
+	return class
+}
+
+func resolveSuperClass(class *Class) {
+
+}
+
+func resolveInterfaces(class *Class) {
+
+}
+
+func link(class *Class) {
+
+}
+
+func parseClass(data []byte) *Class {
+	cf, err := classfile.Parse(data)
+	if err != nil {
+		panic(err)
+	}
+	return newClass(cf)
 }
