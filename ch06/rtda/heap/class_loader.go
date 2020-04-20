@@ -22,6 +22,7 @@ func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
 }
 
 func (self *ClassLoader) LoadClass(name string) *Class {
+	//map有两个返回值，第二个返回值，如果不存在key，那么ok为false，如果存在ok为true
 	if class, ok := self.classMap[name]; ok {
 		return class
 	}
