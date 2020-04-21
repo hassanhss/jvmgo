@@ -81,7 +81,7 @@ func (self *Class) getPackageName() string {
 	return ""
 }
 
-func (self *Class) isAccessibleTo(other Class) bool {
+func (self *Class) isAccessibleTo(other *Class) bool {
 	return self.IsPublic() || self.getPackageName() == other.getPackageName()
 }
 
