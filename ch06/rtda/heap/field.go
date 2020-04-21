@@ -14,7 +14,7 @@ func newFields(class *Class, cfFields []*classfile.MemberInfo) []*Field {
 		fields[i] = &Field{}
 		fields[i].class = class
 		fields[i].copyMemberInfo(cfField)
-
+		fields[i].copyAttributes(cfField)
 	}
 	return fields
 }
