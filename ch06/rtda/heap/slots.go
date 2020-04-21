@@ -9,6 +9,7 @@ type Slot struct {
 
 type Slots []Slot
 
+//Go语言中的引用类型有：映射（map），数组切片（slice），通道（channel），方法与函数
 func newSlots(slotCount uint) Slots {
 	if slotCount > 0 {
 		return make(Slots, slotCount)
