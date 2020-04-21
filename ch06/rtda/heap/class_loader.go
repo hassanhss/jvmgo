@@ -59,15 +59,100 @@ func (self *ClassLoader) defineClass(data []byte) *Class {
 }
 
 func resolveSuperClass(class *Class) {
-
+	if class.name != "java/lang/Object" {
+		class.superClass = class.loader.LoadClass(class.superClassName)
+	}
 }
 
 func resolveInterfaces(class *Class) {
-
+	interfaceCount := len(class.interfaceNames)
+	if interfaceCount > 0 {
+		class.interfaces = make([]*Class, interfaceCount)
+		for i, interfaceName := range class.interfaceNames {
+			class.interfaces[i] = class.loader.LoadClass(interfaceName)
+		}
+	}
 }
 
 func link(class *Class) {
+	verify(class)
+	prepare(class)
+}
 
+func verify(class *Class) {
+	//todo
+}
+
+func prepare(class *Class) {
+	calcInstanceFieldSlotIds(class)
+	calcStaticFieldSlotIds(class)
+	allocAndInitStaticVars(class)
+}
+
+func calcInstanceFieldSlotIds(class *Class) {
+	slotId := uint(0)
+	if class.superClass != nil {
+		slotId = class.superClass.instanceSlotCount
+	}
+	for _, field := range class.fields {
+		if !field.IsStatic() {
+			field.slotId = slotId
+			slotId++
+			if field.isLongOrDouble() {
+				slotId++
+			}
+		}
+	}
+	class.instanceSlotCount = slotId
+}
+
+func calcStaticFieldSlotIds(class *Class) {
+	slotId := uint(0)
+	for _, field := range class.fields {
+		if field.IsStatic() {
+			field.slotId = slotId
+			slotId++
+			if field.isLongOrDouble() {
+				slotId++
+			}
+		}
+	}
+	class.staticSlotCount = slotId
+}
+
+func allocAndInitStaticVars(class *Class) {
+	class.staticVars = newSlots(class.staticSlotCount)
+	for _, field := range class.fields {
+		if field.IsStatic() && field.IsFinal() {
+			initStaticFinalVar(class, field)
+		}
+	}
+}
+
+func initStaticFinalVar(class *Class, field *Field) {
+	vars := class.staticVars
+	cp := class.constantPool
+	cpIndex := field.ConstValueIndex()
+	slotId := field.slotId
+
+	if cpIndex > 0 {
+		switch field.Descriptor() {
+		case "Z", "B", "C", "S", "I":
+			val := cp.GetConstant(cpIndex).(int32)
+			vars.SetInt(slotId, val)
+		case "J":
+			val := cp.GetConstant(cpIndex).(int64)
+			vars.SetLong(slotId, val)
+		case "F":
+			val := cp.GetConstant(cpIndex).(float32)
+			vars.SetFloat(slotId, val)
+		case "D":
+			val := cp.GetConstant(cpIndex).(float64)
+			vars.SetDouble(slotId, val)
+		case "Ljava/lang/String;":
+			panic("todo")
+		}
+	}
 }
 
 func parseClass(data []byte) *Class {
