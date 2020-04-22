@@ -37,8 +37,8 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 
 func catchErr(frame *rtda.Frame) {
 	if r := recover(); r != nil {
-		//fmt.Printf("LocalVars:%v\n", frame.LocalVars())
-		//fmt.Printf("OperandStack:%v\n", frame.OperandStack())
-		//panic(r)
+		fmt.Printf("LocalVars:%v\n", frame.LocalVars())
+		fmt.Printf("OperandStack:%v\n", frame.OperandStack())
+		panic(r)
 	}
 }
