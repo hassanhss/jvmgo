@@ -7,7 +7,7 @@ import (
 )
 
 type NEW struct {
-	base.Index8Instruction
+	base.Index16Instruction
 }
 
 func (self *NEW) Execute(frame *rtda.Frame) {
