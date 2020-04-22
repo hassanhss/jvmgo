@@ -17,8 +17,8 @@ func (self *INSTANCE_OF) Execute(frame *rtda.Frame) {
 		stack.PushInt(0)
 		return
 	}
-	cp := frame.Method().Class().ConstantPool()
-	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
+	pool := frame.Method().Class().ConstantPool()
+	classRef := pool.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 	if ref.IsInstanceOf(class) {
 		stack.PushInt(1)

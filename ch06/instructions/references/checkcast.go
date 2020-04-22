@@ -19,8 +19,8 @@ func (self *CHECK_CAST) Execute(frame *rtda.Frame) {
 	if ref == nil {
 		return
 	}
-	cp := frame.Method().Class().ConstantPool()
-	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
+	pool := frame.Method().Class().ConstantPool()
+	classRef := pool.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 	if !ref.IsInstanceOf(class) {
 		panic("java.lang.ClassCastException")

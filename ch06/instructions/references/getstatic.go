@@ -11,8 +11,8 @@ type GET_STATIC struct {
 }
 
 func (self *GET_STATIC) Execute(frame *rtda.Frame) {
-	cp := frame.Method().Class().ConstantPool()
-	fieldRef := cp.GetConstant(self.Index).(*heap.FieldRef)
+	pool := frame.Method().Class().ConstantPool()
+	fieldRef := pool.GetConstant(self.Index).(*heap.FieldRef)
 	field := fieldRef.ResolvedField()
 	class := field.Class()
 	//todo inti class

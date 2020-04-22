@@ -7,9 +7,9 @@ type FieldRef struct {
 	field *Field
 }
 
-func newFieldRef(cp *ConstantPool, refInfo *classfile.ConstantFieldrefInfo) *FieldRef {
+func newFieldRef(pool *ConstantPool, refInfo *classfile.ConstantFieldrefInfo) *FieldRef {
 	ref := &FieldRef{}
-	ref.cp = cp
+	ref.pool = pool
 	ref.copyMemberRefInfo(&refInfo.ConstantMemberrefInfo)
 	return ref
 }
@@ -22,7 +22,7 @@ func (self *FieldRef) ResolvedField() *Field {
 }
 
 func (self *FieldRef) resolveFieldRef() {
-	d := self.cp.class
+	d := self.pool.class
 	c := self.ResolvedClass()
 	field := lookupField(c, self.name, self.descriptor)
 	if field == nil {

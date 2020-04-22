@@ -18,30 +18,30 @@ method_info {
 */
 
 type MemberInfo struct {
-	cp              ConstantPool
+	pool            ConstantPool
 	accessFlag      uint16
 	nameIndex       uint16
 	descriptorIndex uint16
 	attributes      []AttributeInfo
 }
 
-func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
+func readMembers(reader *ClassReader, pool ConstantPool) []*MemberInfo {
 	memberCount := reader.readUint16()
 	//创建membercount个MemberInfo
 	members := make([]*MemberInfo, memberCount)
 	for i := range members {
-		members[i] = readMember(reader, cp)
+		members[i] = readMember(reader, pool)
 	}
 	return members
 }
 
-func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
+func readMember(reader *ClassReader, pool ConstantPool) *MemberInfo {
 	return &MemberInfo{
-		cp:              cp,
+		pool:            pool,
 		accessFlag:      reader.readUint16(),
 		nameIndex:       reader.readUint16(),
 		descriptorIndex: reader.readUint16(),
-		attributes:      readAttributes(reader, cp),
+		attributes:      readAttributes(reader, pool),
 	}
 }
 
@@ -50,11 +50,11 @@ func (self *MemberInfo) AccessFlag() uint16 {
 }
 
 func (self *MemberInfo) Name() string {
-	return self.cp.getUtf8(self.nameIndex)
+	return self.pool.getUtf8(self.nameIndex)
 }
 
 func (self *MemberInfo) Descriptor() string {
-	return self.cp.getUtf8(self.descriptorIndex)
+	return self.pool.getUtf8(self.descriptorIndex)
 }
 
 func (self *MemberInfo) CodeAttribute() *CodeAttribute {

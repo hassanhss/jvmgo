@@ -31,7 +31,7 @@ type ConstantInterfaceMethodrefInfo struct {
 }
 
 type ConstantMemberrefInfo struct {
-	cp               ConstantPool
+	pool             ConstantPool
 	classIndex       uint16
 	nameAndTypeIndex uint16
 }
@@ -42,9 +42,9 @@ func (self *ConstantMemberrefInfo) readInfo(reader *ClassReader) {
 }
 
 func (self *ConstantMemberrefInfo) ClassName() string {
-	return self.cp.getClassName(self.classIndex)
+	return self.pool.getClassName(self.classIndex)
 }
 
 func (self *ConstantMemberrefInfo) NameAndDescirptor() (string, string) {
-	return self.cp.getNameAndType(self.nameAndTypeIndex)
+	return self.pool.getNameAndType(self.nameAndTypeIndex)
 }

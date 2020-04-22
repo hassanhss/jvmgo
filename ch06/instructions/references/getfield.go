@@ -11,8 +11,8 @@ type GET_FIELD struct {
 }
 
 func (self *GET_FIELD) Execute(frame *rtda.Frame) {
-	cp := frame.Method().Class().ConstantPool()
-	fieldRef := cp.GetConstant(self.Index).(*heap.FieldRef)
+	pool := frame.Method().Class().ConstantPool()
+	fieldRef := pool.GetConstant(self.Index).(*heap.FieldRef)
 	field := fieldRef.ResolvedField()
 	if field.IsStatic() {
 		panic("java.lang.IncompatibleClassError")

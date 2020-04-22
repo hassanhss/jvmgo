@@ -34,7 +34,7 @@ func readConstantInfo(reader *ClassReader, pool ConstantPool) ConstantInfo {
 	return c
 }
 
-func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
+func newConstantInfo(tag uint8, pool ConstantPool) ConstantInfo {
 	switch tag {
 	case CONSTANT_Integer:
 		return &ConstantIntegerInfo{}
@@ -47,15 +47,15 @@ func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	case CONSTANT_Utf8:
 		return &ConstantUtf8Info{}
 	case CONSTANT_String:
-		return &ConstantStringInfo{cp: cp}
+		return &ConstantStringInfo{pool: pool}
 	case CONSTANT_Class:
-		return &ConstantClassInfo{cp: cp}
+		return &ConstantClassInfo{pool: pool}
 	case CONSTANT_Fieldref:
-		return &ConstantFieldrefInfo{ConstantMemberrefInfo{cp: cp}}
+		return &ConstantFieldrefInfo{ConstantMemberrefInfo{pool: pool}}
 	case CONSTANT_Methodref:
-		return &ConstantMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+		return &ConstantMethodrefInfo{ConstantMemberrefInfo{pool: pool}}
 	case CONSTANT_InterfaceMethodref:
-		return &ConstantInterfaceMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+		return &ConstantInterfaceMethodrefInfo{ConstantMemberrefInfo{pool: pool}}
 	case CONSTANT_NameAndType:
 		return &ConstantNameAndTypeInfo{}
 	case CONSTANT_MethodType:

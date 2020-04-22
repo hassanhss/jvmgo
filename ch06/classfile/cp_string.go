@@ -7,7 +7,7 @@ CONSTANT_String_info {
 }
 */
 type ConstantStringInfo struct {
-	cp          ConstantPool
+	pool        ConstantPool
 	stringIndex uint16
 }
 
@@ -16,5 +16,5 @@ func (self *ConstantStringInfo) readInfo(reader *ClassReader) {
 }
 
 func (self *ConstantStringInfo) String() string {
-	return self.cp.getUtf8(self.stringIndex)
+	return self.pool.getUtf8(self.stringIndex)
 }

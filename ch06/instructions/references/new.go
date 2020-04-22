@@ -11,8 +11,8 @@ type NEW struct {
 }
 
 func (self *NEW) Execute(frame *rtda.Frame) {
-	cp := frame.Method().Class().ConstantPool()
-	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
+	pool := frame.Method().Class().ConstantPool()
+	classRef := pool.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 	//todo inti class
 	if class.IsInterface() || class.IsAbstract() {

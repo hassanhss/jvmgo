@@ -12,20 +12,20 @@ type AttributeInfo interface {
 	readInfo(reader *ClassReader)
 }
 
-func readAttributes(reader *ClassReader, cp ConstantPool) []AttributeInfo {
+func readAttributes(reader *ClassReader, pool ConstantPool) []AttributeInfo {
 	attributeCount := reader.readUint16()
 	attributes := make([]AttributeInfo, attributeCount)
 	for i := range attributes {
-		attributes[i] = readAttribute(reader, cp)
+		attributes[i] = readAttribute(reader, pool)
 	}
 	return attributes
 }
 
-func readAttribute(reader *ClassReader, cp ConstantPool) AttributeInfo {
+func readAttribute(reader *ClassReader, pool ConstantPool) AttributeInfo {
 	attrNameIndex := reader.readUint16()
-	attrName := cp.getUtf8(attrNameIndex)
+	attrName := pool.getUtf8(attrNameIndex)
 	attrLen := reader.readUint32()
-	attrInfo := newAttributeInfo(attrName, attrLen, cp)
+	attrInfo := newAttributeInfo(attrName, attrLen, pool)
 	attrInfo.readInfo(reader)
 	return attrInfo
 }

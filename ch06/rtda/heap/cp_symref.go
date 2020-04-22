@@ -1,7 +1,7 @@
 package heap
 
 type SymRef struct {
-	cp        *ConstantPool
+	pool      *ConstantPool
 	className string
 	class     *Class
 }
@@ -14,7 +14,7 @@ func (self *SymRef) ResolvedClass() *Class {
 }
 
 func (self *SymRef) resolveClassRef() {
-	d := self.cp.class
+	d := self.pool.class
 	c := d.loader.LoadClass(self.className)
 	if !c.isAccessibleTo(d) {
 		panic("java.lang.IllegealAccessError")

@@ -8,7 +8,7 @@ CONSTANT_Class_info {
 */
 
 type ConstantClassInfo struct {
-	cp        ConstantPool
+	pool      ConstantPool
 	nameIndex uint16
 }
 
@@ -17,5 +17,5 @@ func (self *ConstantClassInfo) readInfo(reader *ClassReader) {
 }
 
 func (self *ConstantClassInfo) Name() string {
-	return self.cp.getUtf8(self.nameIndex)
+	return self.pool.getUtf8(self.nameIndex)
 }
