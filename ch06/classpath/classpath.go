@@ -18,10 +18,10 @@ type Classpath struct {
 }
 
 func Parse(jreOption, cpOption string) *Classpath {
-	cp := &Classpath{}
-	cp.parseBootAndExtClasspath(jreOption)
-	cp.ParseUserClassPath(cpOption)
-	return cp
+	path := &Classpath{}
+	path.parseBootAndExtClasspath(jreOption)
+	path.ParseUserClassPath(cpOption)
+	return path
 }
 
 func (self *Classpath) parseBootAndExtClasspath(jreOption string) {

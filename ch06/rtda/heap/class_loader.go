@@ -14,13 +14,13 @@ class names:
     - array classes: [Ljava/lang/Object; ...
 */
 type ClassLoader struct {
-	cp       *classpath.Classpath
+	path     *classpath.Classpath
 	classMap map[string]*Class
 }
 
-func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
+func NewClassLoader(path *classpath.Classpath) *ClassLoader {
 	return &ClassLoader{
-		cp:       cp,
+		path:     path,
 		classMap: make(map[string]*Class),
 	}
 }
@@ -42,7 +42,7 @@ func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 }
 
 func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
-	data, entry, err := self.cp.ReadClass(name)
+	data, entry, err := self.path.ReadClass(name)
 	if err != nil {
 		panic("java.lang.ClassNotFoundException: " + name)
 	}
