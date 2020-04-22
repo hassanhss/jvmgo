@@ -13,3 +13,10 @@ func newInterfaceMethodRef(pool *ConstantPool, refInfo *classfile.ConstantInterf
 	ref.copyMemberRefInfo(&refInfo.ConstantMemberrefInfo)
 	return ref
 }
+
+func (self *InterfaceMethodRef) ResolvedInterfaceInterfaceMethod() *Method {
+	if self.method == nil {
+		//self.method = res
+	}
+	return nil
+}
