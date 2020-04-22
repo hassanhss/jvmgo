@@ -10,7 +10,7 @@ SourceFile_attribute {
 */
 
 type SourceFileAttribute struct {
-	cp              ConstantPool
+	pool            ConstantPool
 	sourceFileIndex uint16
 }
 
@@ -19,5 +19,5 @@ func (self *SourceFileAttribute) readInfo(reader *ClassReader) {
 }
 
 func (self *SourceFileAttribute) FileName() string {
-	return self.cp.getUtf8(self.sourceFileIndex)
+	return self.pool.getUtf8(self.sourceFileIndex)
 }

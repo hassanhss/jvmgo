@@ -30,10 +30,10 @@ func readAttribute(reader *ClassReader, cp ConstantPool) AttributeInfo {
 	return attrInfo
 }
 
-func newAttributeInfo(attrName string, attrLen uint32, cp ConstantPool) AttributeInfo {
+func newAttributeInfo(attrName string, attrLen uint32, pool ConstantPool) AttributeInfo {
 	switch attrName {
 	case "Code":
-		return &CodeAttribute{pool: cp}
+		return &CodeAttribute{pool: pool}
 	case "ConstantValue":
 		return &ConstantValueAttribute{}
 	case "DeprecateAttribute":
@@ -45,7 +45,7 @@ func newAttributeInfo(attrName string, attrLen uint32, cp ConstantPool) Attribut
 	case "LocalVariableTable":
 		return &LocalVariableTableAttribute{}
 	case "SourceFile":
-		return &SourceFileAttribute{cp: cp}
+		return &SourceFileAttribute{pool: pool}
 	case "Synthetic":
 		return &SyntheticAttribute{}
 	default:
