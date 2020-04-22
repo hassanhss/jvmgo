@@ -13,7 +13,7 @@ type Class struct {
 	interfaceNames    []string
 	constantPool      *ConstantPool
 	fields            []*Field
-	method            []*Method
+	methods           []*Method
 	loader            *ClassLoader
 	superClass        *Class
 	interfaces        []*Class
@@ -30,7 +30,7 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.interfaceNames = cf.InterfaceNames()
 	class.constantPool = newConstantPool(class, cf.ConstantPool())
 	class.fields = newFields(class, cf.Fields())
-	class.method = newMethods(class, cf.Methods())
+	class.methods = newMethods(class, cf.Methods())
 	return class
 }
 
@@ -90,7 +90,7 @@ func (self *Class) GetMainMethod() *Method {
 }
 
 func (self *Class) getStaticMethod(name, descriptor string) *Method {
-	for _, method := range self.method {
+	for _, method := range self.methods {
 		if method.IsStatic() &&
 			method.name == name &&
 			method.descriptor == descriptor {
