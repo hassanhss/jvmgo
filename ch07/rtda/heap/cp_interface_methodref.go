@@ -44,5 +44,4 @@ func lookupInterfaceMethod(iface *Class, name string, descriptor string) *Method
 		}
 	}
 	return lookupMethodInInterfaces(iface.interfaces, name, descriptor)
-
 }
