@@ -14,14 +14,6 @@ func newMethodRef(pool *ConstantPool, refInfo *classfile.ConstantMethodrefInfo) 
 	return ref
 }
 
-func (self *MethodRef) Name() string {
-	return self.name
-}
-
-func (self *MemberRef) Descriptor() string {
-	return self.descriptor
-}
-
 func (self *MethodRef) ResolvedMethod() *Method {
 	if self.method == nil {
 		self.resolveMethodRef()
