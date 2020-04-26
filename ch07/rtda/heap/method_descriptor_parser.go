@@ -34,7 +34,11 @@ func (self *MethodDescriptorParser) startParams() {
 func (self *MethodDescriptorParser) parseParamTypes() {
 	for {
 		t := self.parseFieldType()
-
+		if t != "" {
+			self.parsed.addParameterType(t)
+		} else {
+			break
+		}
 	}
 }
 
