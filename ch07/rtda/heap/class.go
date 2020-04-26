@@ -20,6 +20,7 @@ type Class struct {
 	instanceSlotCount uint
 	staticSlotCount   uint
 	staticVars        Slots
+	initStarted       bool
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -64,6 +65,28 @@ func (self *Class) IsAnnotation() bool {
 
 func (self *Class) IsEnum() bool {
 	return 0 != self.accessFlags&ACC_ENUM
+}
+
+func (self *Class) Name() string {
+	return self.name
+}
+
+func (self *Class) Fields() []*Field {
+	return self.fields
+}
+func (self *Class) Methods() []*Method {
+	return self.methods
+}
+func (self *Class) SuperClass() *Class {
+	return self.superClass
+}
+
+func (self *Class) InitStarted() bool {
+	return self.initStarted
+}
+
+func (self *Class) StartInit() {
+	self.initStarted = true
 }
 
 func (self *Class) ConstantPool() *ConstantPool {
