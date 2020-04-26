@@ -123,6 +123,10 @@ func (self *Class) getStaticMethod(name, descriptor string) *Method {
 	return nil
 }
 
+func (self *Class) GetClinitMethod() *Method {
+	return self.getStaticMethod("<clinit>","()V")
+}
+
 func (self *Class) NewObject() *Object {
 	return NewObject(self)
 }
