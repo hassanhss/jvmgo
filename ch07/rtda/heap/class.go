@@ -97,7 +97,7 @@ func (self *Class) StaticVars() Slots {
 	return self.staticVars
 }
 
-func (self *Class) getPackageName() string {
+func (self *Class) GetPackageName() string {
 	if i := strings.LastIndex(self.name, "/"); i >= 0 {
 		return self.name[:i]
 	}
@@ -105,7 +105,7 @@ func (self *Class) getPackageName() string {
 }
 
 func (self *Class) isAccessibleTo(other *Class) bool {
-	return self.IsPublic() || self.getPackageName() == other.getPackageName()
+	return self.IsPublic() || self.GetPackageName() == other.GetPackageName()
 }
 
 func (self *Class) GetMainMethod() *Method {
