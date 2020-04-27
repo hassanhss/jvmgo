@@ -17,9 +17,9 @@ func interpret(method *heap.Method,logInst bool) {
 }
 
 func loop(thread *rtda.Thread, logInst bool) {
-	frame := thread.PopFrame()
 	reader := &base.BytecodeReader{}
 	for {
+		frame := thread.CurrentFrame()
 		pc := frame.NextPC()
 		thread.SetPC(pc)
 		//decode
