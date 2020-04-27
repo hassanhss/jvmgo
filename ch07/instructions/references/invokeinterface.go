@@ -10,7 +10,7 @@ type INVOKE_INTERFACE struct {
 	index 		uint
 }
 
-func (self *INVOKE_INTERFACE) FectchOperands(reader *base.BytecodeReader) {
+func (self *INVOKE_INTERFACE) FetchOperands(reader *base.BytecodeReader) {
 	self.index = uint(reader.ReadUint16())
 	reader.ReadUint8()
 	reader.ReadUint8()
