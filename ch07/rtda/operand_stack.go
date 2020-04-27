@@ -10,10 +10,10 @@ type OperandStack struct {
 	slots []Slot
 }
 
-func newOperandStack(maxLock uint) *OperandStack {
-	if maxLock > 0 {
+func newOperandStack(maxStack uint) *OperandStack {
+	if maxStack > 0 {
 		return &OperandStack{
-			slots: make([]Slot, maxLock),
+			slots: make([]Slot, maxStack),
 		}
 	}
 	return nil
