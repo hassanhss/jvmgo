@@ -88,5 +88,5 @@ func (self *OperandStack) PopSlot() Slot {
 }
 
 func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
-	return self.slots[self.size-1].ref
+	return self.slots[self.size-1-n].ref
 }
