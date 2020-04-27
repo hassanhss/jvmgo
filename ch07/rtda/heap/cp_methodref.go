@@ -31,7 +31,7 @@ func (self *MethodRef) resolveMethodRef() {
 	if method == nil {
 		panic("java.lang.NoSuchMethodError")
 	}
-	if method.IsAccessibleTo(d) {
+	if !method.IsAccessibleTo(d) {
 		panic("java.lang.IllegalAccessError")
 	}
 	self.method = method
