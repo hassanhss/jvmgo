@@ -45,7 +45,7 @@ func (self *CodeAttribute) readInfo(reader *ClassReader) {
 }
 
 func (self *CodeAttribute) MaxStack() uint {
-	return uint(self.maxLocals)
+	return uint(self.maxStack)
 }
 
 func (self *CodeAttribute) MaxLocals() uint {
