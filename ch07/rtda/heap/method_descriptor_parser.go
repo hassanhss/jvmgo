@@ -21,6 +21,7 @@ func (self *MethodDescriptorParser) parse(descriptor string) *MethodDescriptor {
 	self.startParams()
 	self.parseParamTypes()
 	self.endParams()
+	self.parseReturnType()
 	self.finish()
 	return self.parsed
 }
@@ -118,4 +119,18 @@ func (self *MethodDescriptorParser) parseArrayType() string {
 	arrEnd := self.offset
 	descriptor := self.raw[arrStart:arrEnd]
 	return descriptor
+}
+
+func (self *MethodDescriptorParser) parseReturnType() {
+	if self.readUint8() == 'V' {
+		self.parsed.returnType = "V"
+		return
+	}
+	self.unreadUint8()
+	t := self.parseFieldType()
+	if t != "" {
+		self.parsed.returnType = t
+		return
+	}
+	self.casusePanic()
 }
