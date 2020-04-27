@@ -15,7 +15,7 @@ func initSuperClass(thread *rtda.Thread, class *heap.Class) {
 	if !class.IsInterface() {
 		superClass := class.SuperClass()
 		if superClass != nil && !superClass.InitStarted() {
-			InitClass(thread,class)
+			InitClass(thread,superClass)
 		}
 	}
 }
