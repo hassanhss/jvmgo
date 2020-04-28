@@ -128,5 +128,18 @@ func (self *Class) GetClinitMethod() *Method {
 }
 
 func (self *Class) NewObject() *Object {
-	return NewObject(self)
+	return newObject(self)
+}
+
+func (self *Class) getField(name,descriptor string, isStatic bool) *Field {
+	for c := self ;c != nil ;c = c.superClass {
+		for _,field := range c.fields {
+			if field.IsStatic() == isStatic &&
+				field.name == name &&
+				field.descriptor == descriptor {
+				return field
+			}
+		}
+	}
+	return nil
 }
