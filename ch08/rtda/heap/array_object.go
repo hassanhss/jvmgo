@@ -15,7 +15,9 @@ func (self *Object) Ints() []int32 {
 func (self *Object) Longs() []int64 {
 	return self.data.([]int64)
 }
-
+func (self *Object) Chars() []uint16 {
+	return self.data.([]uint16)
+}
 func (self *Object) Floats() []float32 {
 	return self.data.([]float32)
 }
