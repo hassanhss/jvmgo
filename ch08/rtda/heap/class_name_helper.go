@@ -12,6 +12,24 @@ var primitiveTypes = map[string]string{
 	"double":  "D",
 }
 
+// [XXX -> [[XXX
+// int -> [I
+// XXX -> [LXXX;
+func getArrayClassName(className string) string {
+	return "[" + toDescriptor(className)
+}
+
+func toDescriptor(name string) string {
+	if name[0] == '[' {
+		return name
+	}
+	if d,ok := primitiveTypes[name];ok {
+		return d
+	}
+	// object
+	return "L" + name + ";"
+}
+
 // [[XXX -> [XXX
 // [LXXX; -> XXX
 // [I -> int
