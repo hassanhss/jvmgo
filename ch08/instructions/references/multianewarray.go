@@ -3,6 +3,7 @@ package references
 import (
 	"jvmgo/ch08/instructions/base"
 	"jvmgo/ch08/rtda"
+	"jvmgo/ch08/rtda/heap"
 )
 
 type MULTI_ANEW_ARRAY struct {
@@ -16,5 +17,36 @@ func (self *MULTI_ANEW_ARRAY) FetchOperands(reader *base.BytecodeReader) {
 }
 
 func (self *MULTI_ANEW_ARRAY) Execute(frame *rtda.Frame) {
+	cp := frame.Method().Class().ConstantPool()
+	classRef := cp.GetConstant(uint(self.index)).(*heap.ClassRef)
+	arrClass := classRef.ResolvedClass()
 
+	stack := frame.OperandStack()
+	counts := popAndCheckCounts(stack,int(self.dimensions))
+	arr := newMultiDimensionalArray(counts, arrClass)
+	stack.PushRef(arr)
+}
+
+func newMultiDimensionalArray(counts []int32, class *heap.Class) *heap.Object {
+	count := uint(counts[0])
+	arr := class.NewArray(count)
+
+	if len(counts) > 1 {
+		refs := arr.Refs()
+		for i := range refs {
+			refs[i] = newMultiDimensionalArray(counts[1:],class.ComponentClass())
+		}
+	}
+	return arr
+}
+
+func popAndCheckCounts(stack *rtda.OperandStack, dimensions int) []int32 {
+	counts := make([]int32, dimensions)
+	for i := 0; i < dimensions-1; i++ {
+		counts[i] = stack.PopInt()
+		if counts[i] <0 {
+			panic("java.lang.NegativeArraySizeException")
+		}
+	}
+	return counts
 }
