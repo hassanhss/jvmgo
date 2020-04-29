@@ -74,7 +74,7 @@ func (self *ClassLoader) loadArrayClass(name string) *Class {
 		superClass:  self.LoadClass("java/lang/Object"),
 		interfaces: []*Class{
 			self.LoadClass("java/lang/Cloneable"),
-			self.LoadClass("java/lang/Serializable"),
+			self.LoadClass("java/io/Serializable"),
 		},
 	}
 	self.classMap[name] = class
