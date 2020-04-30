@@ -20,11 +20,14 @@ type ClassLoader struct {
 }
 
 func NewClassLoader(path *classpath.Classpath,verboseFlag bool) *ClassLoader {
-	return &ClassLoader{
+	loader := &ClassLoader{
 		path:     path,
 		verboseFlag: verboseFlag,
 		classMap: make(map[string]*Class),
 	}
+	loader.loadBasicClasses()
+	loader.loadPrimitiveClasses()
+	return loader
 }
 
 func (self *ClassLoader) LoadClass(name string) *Class {
@@ -79,6 +82,34 @@ func (self *ClassLoader) loadArrayClass(name string) *Class {
 	}
 	self.classMap[name] = class
 	return class
+}
+
+func (self *ClassLoader) loadBasicClasses() {
+	jlClassClass := self.LoadClass("java/lang/Class")
+	for _,class := range self.classMap {
+		if class.jClass == nil {
+			class.jClass = jlClassClass.NewObject()
+			class.jClass.extra = class
+		}
+	}
+}
+
+func (self *ClassLoader) loadPrimitiveClasses() {
+	for primitiveType,_ := range primitiveTypes {
+		self.loadPrimitiveClass(primitiveType)
+	}
+}
+
+func (self *ClassLoader) loadPrimitiveClass(className string) {
+	class := &Class{
+		accessFlags: ACC_PUBLIC,
+		name: className,
+		loader: self,
+		initStarted: true,
+	}
+	class.jClass = self.classMap["java/lang/Class"].NewObject()
+	class.jClass.extra = class
+	self.classMap[className] = class
 }
 
 func resolveSuperClass(class *Class) {
