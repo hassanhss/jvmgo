@@ -1,9 +1,7 @@
 package instructions
 
-import (
-	"fmt"
-	"jvmgo/ch09/instructions/base"
-)
+import "fmt"
+import "jvmgo/ch09/instructions/base"
 import . "jvmgo/ch09/instructions/comparisons"
 import . "jvmgo/ch09/instructions/constants"
 import . "jvmgo/ch09/instructions/control"
@@ -11,9 +9,10 @@ import . "jvmgo/ch09/instructions/conversions"
 import . "jvmgo/ch09/instructions/extended"
 import . "jvmgo/ch09/instructions/loads"
 import . "jvmgo/ch09/instructions/math"
+import . "jvmgo/ch09/instructions/references"
+import . "jvmgo/ch09/instructions/reserved"
 import . "jvmgo/ch09/instructions/stack"
 import . "jvmgo/ch09/instructions/stores"
-import . "jvmgo/ch09/instructions/references"
 
 // NoOperandsInstruction singletons
 var (
@@ -164,7 +163,7 @@ var (
 	// athrow        = &ATHROW{}
 	// monitorenter  = &MONITOR_ENTER{}
 	// monitorexit   = &MONITOR_EXIT{}
-	// invoke_native = &INVOKE_NATIVE{}
+	invoke_native = &INVOKE_NATIVE{}
 )
 
 func NewInstruction(opcode byte) base.Instruction {
@@ -574,7 +573,8 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0xc9:
 	// 	return &JSR_W{}
 	// case 0xca: breakpoint
-	// case 0xfe: impdep1
+	case 0xfe:
+		return invoke_native
 	// case 0xff: impdep2
 	default:
 		panic(fmt.Errorf("Unsupported opcode: 0x%x!", opcode))
