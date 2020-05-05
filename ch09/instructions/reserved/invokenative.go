@@ -5,6 +5,7 @@ import (
 	"jvmgo/ch09/native"
 	"jvmgo/ch09/rtda"
 )
+import _ "jvmgo/ch09/native/java/lang"
 
 type INVOKE_NATIVE struct {
 	base.NoOperandsInstruction
@@ -16,7 +17,7 @@ func (self *INVOKE_NATIVE) Execute(frame *rtda.Frame) {
 	methodName := method.Name()
 	methodDescriptor := method.Descriptor()
 
-	nativeMethod := native.FindNativeMethod(className,methodName, methodDescriptor)
+	nativeMethod := native.FindNativeMethod(className, methodName, methodDescriptor)
 	if nativeMethod == nil {
 		methodInfo := className + "." + methodName + methodDescriptor
 		panic("java.lang.UnsatisfiedLinkError: " + methodInfo)

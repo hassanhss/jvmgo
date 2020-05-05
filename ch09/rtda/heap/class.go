@@ -21,7 +21,7 @@ type Class struct {
 	staticSlotCount   uint
 	staticVars        Slots
 	initStarted       bool
-	jClass			  *Object //java.lang.Class 实例
+	jClass            *Object //java.lang.Class 实例
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -133,16 +133,16 @@ func (self *Class) getStaticMethod(name, descriptor string) *Method {
 }
 
 func (self *Class) GetClinitMethod() *Method {
-	return self.getStaticMethod("<clinit>","()V")
+	return self.getStaticMethod("<clinit>", "()V")
 }
 
 func (self *Class) NewObject() *Object {
 	return newObject(self)
 }
 
-func (self *Class) getField(name,descriptor string, isStatic bool) *Field {
-	for c := self ;c != nil ;c = c.superClass {
-		for _,field := range c.fields {
+func (self *Class) getField(name, descriptor string, isStatic bool) *Field {
+	for c := self; c != nil; c = c.superClass {
+		for _, field := range c.fields {
 			if field.IsStatic() == isStatic &&
 				field.name == name &&
 				field.descriptor == descriptor {
@@ -166,4 +166,8 @@ func (self *Class) isJioSerializable() bool {
 func (self *Class) ArrayClass() *Class {
 	arrayClassName := getArrayClassName(self.name)
 	return self.loader.LoadClass(arrayClassName)
+}
+
+func (self *Class) JavaName() string {
+	return strings.Replace(self.name, "/", ".", -1)
 }
