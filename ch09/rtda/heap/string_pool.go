@@ -5,15 +5,15 @@ import "unicode/utf16"
 var internedStrings = map[string]*Object{}
 
 // go string -> java.lang.String
-func JString(loader *ClassLoader,goStr string) *Object {
-	if internedStr,ok := internedStrings[goStr];ok {
+func JString(loader *ClassLoader, goStr string) *Object {
+	if internedStr, ok := internedStrings[goStr]; ok {
 		return internedStr
 	}
 	chars := stringToUtf16(goStr)
-	jChars := &Object{loader.LoadClass("[C"), chars}
+	jChars := &Object{loader.LoadClass("[C"), chars, nil}
 
 	jStr := loader.LoadClass("java/lang/String").NewObject()
-	jStr.SetRefVar("value","[C", jChars)
+	jStr.SetRefVar("value", "[C", jChars)
 	internedStrings[goStr] = jStr
 	return jStr
 }
