@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	native.Register("java/lang/System","arraycopy","(Ljava/lang/Object; ILjava/lang/Object; II)V", arraycopy)
+	native.Register("java/lang/System", "arraycopy", "(Ljava/lang/Object;ILjava/lang/Object;II)V", arraycopy)
 }
 
 func arraycopy(frame *rtda.Frame) {
@@ -22,14 +22,14 @@ func arraycopy(frame *rtda.Frame) {
 		panic("java.lang.NullPointerException")
 	}
 
-	if !checkArrayCopy(src,dest) {
+	if !checkArrayCopy(src, dest) {
 		panic("java.lang.ArrayStoreException")
 	}
 
-	if srcPos < 0 || destPos <0 || length < 0 || srcPos + length > src.ArrayLength() || destPos + length > dest.ArrayLength() {
+	if srcPos < 0 || destPos < 0 || length < 0 || srcPos+length > src.ArrayLength() || destPos+length > dest.ArrayLength() {
 		panic("java.lang.IndexOutOfBoundsException")
 	}
-	heap.ArrayCopy(src,dest,srcPos,destPos,length)
+	heap.ArrayCopy(src, dest, srcPos, destPos, length)
 }
 
 func checkArrayCopy(src *heap.Object, dest *heap.Object) bool {
