@@ -21,7 +21,7 @@ func (self *PUT_FIELD) Execute(frame *rtda.Frame) {
 		panic("java.lang.IncompatibleClassChangeErro")
 	}
 	if field.IsFinal() {
-		if currentClass == field.Class() || currentMethod.Name() == "<init>" {
+		if currentClass != field.Class() || currentMethod.Name() != "<init>" {
 			panic("java.lang.IllegalAccessError")
 		}
 	}

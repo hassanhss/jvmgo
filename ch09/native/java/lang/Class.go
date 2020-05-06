@@ -6,10 +6,12 @@ import (
 	"jvmgo/ch09/rtda/heap"
 )
 
+const jlClass = "java/lang/Class"
+
 func init() {
-	native.Register("java/lang/Class", "getPrimitiveClass", "(Ljava/lang/String; )Ljava/lang/Class; ", getPrimitiveClass)
-	native.Register("java/lang/Class", "getName0", "()Ljava/lang/String;", getName0)
-	native.Register("java/lang/Class", "desiredAssertionStatus0", "(Ljava/lang/Class; )Z", desiredAssertionStatus0)
+	native.Register(jlClass, "getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;", getPrimitiveClass)
+	native.Register(jlClass, "getName0", "()Ljava/lang/String;", getName0)
+	native.Register(jlClass, "desiredAssertionStatus0", "(Ljava/lang/Class;)Z", desiredAssertionStatus0)
 }
 
 func getPrimitiveClass(frame *rtda.Frame) {
