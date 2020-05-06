@@ -38,6 +38,8 @@ func _ldc(frame *rtda.Frame, index uint) {
 		classRef := c.(*heap.ClassRef)
 		classObj := classRef.ResolvedClass().JClass()
 		stack.PushRef(classObj)
+	default:
+		panic("todo: ldc!")
 	}
 }
 
