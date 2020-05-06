@@ -33,12 +33,23 @@ func NewClassLoader(path *classpath.Classpath,verboseFlag bool) *ClassLoader {
 func (self *ClassLoader) LoadClass(name string) *Class {
 	//map有两个返回值，第二个返回值，如果不存在key，那么ok为false，如果存在ok为true
 	if class, ok := self.classMap[name]; ok {
+		// already loaded
 		return class
 	}
-	if name[0] == '[' {
-		return self.loadArrayClass(name)
+
+	var class *Class
+	if name[0] == '[' { // array class
+		class = self.loadArrayClass(name)
+	} else {
+		class = self.loadNonArrayClass(name)
 	}
-	return self.loadNonArrayClass(name)
+
+	if jlClassClass, ok := self.classMap["java/lang/Class"]; ok {
+		class.jClass = jlClassClass.NewObject()
+		class.jClass.extra = class
+	}
+
+	return class
 }
 
 func (self *ClassLoader) loadNonArrayClass(name string) *Class {
