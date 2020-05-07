@@ -21,7 +21,7 @@ type IF_ACMPNE struct {
 }
 
 func (self *IF_ACMPNE) Execute(frame *rtda.Frame) {
-	if _acmp(frame) {
+	if !_acmp(frame) {
 		base.Branch(frame, self.Offset)
 	}
 }
