@@ -7,6 +7,7 @@ type Method struct {
 	maxStack     uint
 	maxLocals    uint
 	code         []byte
+	exceptionTable ExceptionTable
 	argSlotCount uint
 }
 
@@ -36,6 +37,7 @@ func (self *Method) copyAttributes(cfMethod *classfile.MemberInfo) {
 		self.maxStack = codeAttr.MaxStack()
 		self.maxLocals = codeAttr.MaxLocals()
 		self.code = codeAttr.Code()
+		self.exceptionTable = newExceptionTable(codeAttr.ExceptionTable(),self.class.constantPool)
 	}
 }
 
@@ -101,4 +103,12 @@ func (self *Method) Code() []byte {
 }
 func (self *Method) ArgSlotCount() uint {
 	return self.argSlotCount
+}
+
+func (self *Method) FindExceptionHandler(exClass *Class,pc int) int {
+	handler := self.exceptionTable.findExceptionHandler(exClass, pc)
+	if handler != nil {
+		return handler.handlerPc
+	}
+	return -1
 }
