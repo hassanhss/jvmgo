@@ -4,6 +4,7 @@ import (
 	"jvmgo/ch10/instructions/base"
 	"jvmgo/ch10/rtda"
 	"jvmgo/ch10/rtda/heap"
+	"reflect"
 )
 
 type ATHROW struct {
@@ -43,5 +44,15 @@ func findAndGotoExceptionHandler(thread *rtda.Thread,ex *heap.Object) bool {
 
 
 func handlerUncaughtException(thread *rtda.Thread, ex *heap.Object) {
-	
+	thread.ClearStack()
+	jMsg := ex.GetRefVar("detailMessage", "Ljava/lang/String")
+	goMsg := heap.GoString(jMsg)
+	println(ex.Class().JavaName() + ": " + goMsg)
+	stes := reflect.ValueOf(ex.Extra())
+	for i := 0; i < stes.Len(); i++ {
+		ste := stes.Index(i).Interface().(interface {
+			String() string
+		})
+		println("\tat " + ste.String())
+	}
 }
