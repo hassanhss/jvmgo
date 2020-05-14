@@ -45,7 +45,7 @@ func findAndGotoExceptionHandler(thread *rtda.Thread,ex *heap.Object) bool {
 
 func handlerUncaughtException(thread *rtda.Thread, ex *heap.Object) {
 	thread.ClearStack()
-	jMsg := ex.GetRefVar("detailMessage", "Ljava/lang/String")
+	jMsg := ex.GetRefVar("detailMessage", "Ljava/lang/String;")
 	goMsg := heap.GoString(jMsg)
 	println(ex.Class().JavaName() + ": " + goMsg)
 	stes := reflect.ValueOf(ex.Extra())
