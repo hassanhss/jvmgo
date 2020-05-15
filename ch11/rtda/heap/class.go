@@ -193,3 +193,7 @@ func (self *Class) SetRefVar(fieldName, fieldDescriptor string, ref *Object) {
 func (self *Class) SourceFile() string {
 	return self.sourceFile
 }
+
+func (self *Class) GetStaticMethod(name,descriptor string) *Method {
+	return self.getMethod(name,descriptor, true)
+}
